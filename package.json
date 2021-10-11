@@ -1,7 +1,7 @@
 {
   "name": "autovideobuilder",
   "version": "1.0.0",
-  "description": "Crie vídeos automaticamente a partir de um tema",
+  "description": "Create videos automatically from a theme",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/JonattasJK/AutoVideoBuilder/issues"
   },
-  "homepage": "https://github.com/JonattasJK/AutoVideoBuilder#readme"
+  "homepage": "https://github.com/JonattasJK/AutoVideoBuilder#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
 }
