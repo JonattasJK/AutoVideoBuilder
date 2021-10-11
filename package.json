@@ -1,0 +1,25 @@
+{
+  "name": "autovideobuilder",
+  "version": "1.0.0",
+  "description": "Create videos automatically from a theme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonattasJK/AutoVideoBuilder.git"
+  },
+  "keywords": [
+    "autovideobuilder"
+  ],
+  "author": "Jonatas Kampfert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JonattasJK/AutoVideoBuilder/issues"
+  },
+  "homepage": "https://github.com/JonattasJK/AutoVideoBuilder#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
