@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/JonattasJK/AutoVideoBuilder#readme",
   "dependencies": {
+    "ibm-watson": "^6.2.1",
     "readline-sync": "^1.4.10",
     "sbd": "^1.0.19",
     "wikijs": "^6.3.2"
