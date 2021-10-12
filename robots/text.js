@@ -5,7 +5,7 @@ const state = require(path.join(__dirname, 'state.js'))
 const wiki = require('wikijs').default;
 const sentenceBoundaryDetection = require('sbd')
 
-const watsonCredentials = require(path.join(__dirname, '..', 'credentials', 'ibm-credentials.json'))
+const watsonCredentials = require(path.join(__dirname, '..', 'credentials', 'ibm_credentials.json'))
 
 const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
@@ -108,7 +108,6 @@ async function robot() {
             console.log('Error: ', err)
         })
     }
-
 }
 
 module.exports = robot
