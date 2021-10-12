@@ -107,3 +107,4 @@ dist
 # Particular Files
 credentials/*.json
 robots/content.json
+content/
