@@ -1,10 +1,26 @@
+const path = require('path')
+
 const wiki = require('wikijs').default;
 const sentenceBoundaryDetection = require('sbd')
+
+const watsonCredentials = require(path.join(__dirname, '..', 'credentials', 'ibm-credentials.json'))
+
+const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
+
+const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
+  version: '2021-08-01',
+  authenticator: new IamAuthenticator({
+    apikey: watsonCredentials.apikey,
+  }),
+  serviceUrl: watsonCredentials.url,
+});
 
 async function robot(content) {
     await fetchContentFromWikipedia(content)
     sanitizeContent(content)
     breakContentInroSentences(content)
+    await fetchKeywordsOfAllSentences(content)
 
     async function fetchContentFromWikipedia(content){
         
@@ -47,12 +63,15 @@ async function robot(content) {
         function removeDatesInParentheses(text) {
             return text.replace(/\((?:\([^()]*\)|[^()])*\)/gm, '').replace(/  /g,' ')
         }
+
     }
 
     function breakContentInroSentences(content) {
         content.sentences = []
 
-        const sentences = sentenceBoundaryDetection.sentences(content.sourceContentSanitized)
+        let sentences = sentenceBoundaryDetection.sentences(content.sourceContentSanitized)
+        sentences = sentences.slice(0, content.maximumSentences)
+        
         sentences.forEach((sentence) => {
             content.sentences.push({
                 text: sentence,
@@ -61,6 +80,29 @@ async function robot(content) {
             })
         })
     }
+
+    async function fetchKeywordsOfAllSentences(content) {
+        for (const sentence of content.sentences){
+            await fetchWatsonAndReturnKeywords(sentence)
+        }
+    }
+
+    async function fetchWatsonAndReturnKeywords(sentence) {
+        await naturalLanguageUnderstanding.analyze({
+            text: sentence.text,
+            features: {
+                keywords: {}
+            }
+        })
+        .then(analysisResults => {
+            const keywords = analysisResults.result.keywords.map(keyword => keyword.text)
+            keywords.forEach((keyword) => { sentence.keywords.push(keyword) })
+        })
+        .catch(err => {
+            console.log('Error: ', err)
+        })
+    }
+
 }
 
 module.exports = robot
