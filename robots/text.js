@@ -1,5 +1,7 @@
 const path = require('path')
 
+const state = require(path.join(__dirname, 'state.js'))
+
 const wiki = require('wikijs').default;
 const sentenceBoundaryDetection = require('sbd')
 
@@ -16,11 +18,15 @@ const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
   serviceUrl: watsonCredentials.url,
 });
 
-async function robot(content) {
+async function robot() {
+    const content = state.load()
+
     await fetchContentFromWikipedia(content)
     sanitizeContent(content)
     breakContentInroSentences(content)
     await fetchKeywordsOfAllSentences(content)
+
+    state.save(content)
 
     async function fetchContentFromWikipedia(content){
         

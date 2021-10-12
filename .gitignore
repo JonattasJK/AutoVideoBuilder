@@ -103,5 +103,7 @@ dist
 # TernJS port file
 .tern-port
 
-# Credentials
-.credentials/
+
+# Particular Files
+credentials/*.json
+robots/content.json
