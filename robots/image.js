@@ -1,9 +1,10 @@
 const { google } = require('googleapis');
 const customSearch = google.customsearch('v1')
-const imageDownloader = require('image-downloader')
+const imageDownloader = require('image-downloader');
+const { resolve } = require('path');
 
 const path = require('path');
-const { sentences } = require('sbd');
+//const { sentences } = require('sbd');
 const state = require(path.join(__dirname, 'state.js'))
 
 const googleSearchCredentials = require(path.join(__dirname, '..', 'credentials', 'google_credentials.json'))
@@ -13,6 +14,7 @@ async function robot() {
     
     await fetchImagesOffAllSentences(content)
     await downloadAllImages(content)
+    await convertAllImages(content)
 
     state.save(content)
 
@@ -69,8 +71,6 @@ async function robot() {
             dest: path.join(__dirname, '..', 'content', fileName)
         })
     }
-
 }
-//path.join(__dirname, '..', 'content')
 
 module.exports = robot
